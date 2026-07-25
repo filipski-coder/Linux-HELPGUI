@@ -22,7 +22,7 @@ It runs as a global Linux command and provides quick access to useful system com
 ## Installation
 
 1. Clone the repository:
-   git clone https://github.com/yourname/helpgui
+   git clone https://github.com/filipski-coder/helpgui
    cd helpgui
 
 2. Make the script executable:
