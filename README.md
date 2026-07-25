@@ -1,201 +1,52 @@
-# Linux-HELPGUI
-this is a helpgui for linux steps: do "sudo apt install nano" if you dont have the libary then make a new file in  /usr/local/bin/ then name it helpgui and put in this code
- #!/usr/bin/env python3
-import curses
-import sys
+# HelpGUI
 
-pages = {
-    "Python Basics": """Python Basics
+HelpGUI is a colorful terminal-based help menu written in Python.  
+It runs as a global Linux command and provides quick access to useful system commands, tips, and references.
 
-Run a script:
-  python3 file.py
+## Features
 
-Check version:
-  python3 --version
+- Colorful terminal UI
+- Arrow-key navigation
+- Multiple help pages:
+  - Python Basics
+  - Python Advanced
+  - Sudo
+  - APT Package Manager
+  - WSL Commands
+  - Networking
+  - Git
+  - Fastfetch
+- Quit option
+- Works on any Linux terminal
 
-Install packages:
-  pip install <package>
+## Installation
 
-Interactive shell:
-  python3
-""",
+1. Clone the repository:
+   git clone https://github.com/yourname/helpgui
+   cd helpgui
 
-    "Python Advanced": """Python Advanced
+2. Make the script executable:
+   chmod +x helpgui
 
-Virtual environments:
-  python3 -m venv env
-  source env/bin/activate
+3. Move it into your PATH:
+   sudo mv helpgui /usr/local/bin/
 
-Install from requirements:
-  pip install -r requirements.txt
+4. Run HelpGUI:
+   helpgui
 
-Run module:
-  python3 -m <module>
-""",
+## Updating
 
-    "Sudo": """Sudo Commands
+Edit the installed file:
+   sudo nano /usr/local/bin/helpgui
 
-Run as root:
-  sudo <command>
+Run HelpGUI again:
+   helpgui
 
-Repeat last command:
-  sudo !!
+## Uninstall
 
-Edit system files:
-  sudo nano /etc/hosts
-""",
+Remove the command:
+   sudo rm /usr/local/bin/helpgui
 
-    "APT Package Manager": """APT Package Manager
+## License
 
-Update:
-  sudo apt update
-
-Upgrade:
-  sudo apt upgrade
-  sudo apt full-upgrade
-
-Install:
-  sudo apt install <package>
-
-Remove:
-  sudo apt remove <package>
-  sudo apt purge <package>
-
-List:
-  apt list
-  apt list --installed
-  apt list --upgradable
-
-Search:
-  apt search <name>
-
-Show info:
-  apt show <package>
-
-Fix broken:
-  sudo apt --fix-broken install
-
-Cleanup:
-  sudo apt autoremove
-  sudo apt clean
-  sudo apt autoclean
-""",
-
-    "WSL Commands": """WSL Commands
-
-Shutdown:
-  wsl --shutdown
-
-List distros:
-  wsl -l -v
-
-Set version:
-  wsl --set-version Ubuntu 2
-
-Install distro:
-  wsl --install -d Ubuntu
-""",
-
-    "Networking": """Networking Commands
-
-Show IP:
-  ip a
-
-Ping:
-  ping google.com
-
-DNS lookup:
-  dig <domain>
-  nslookup <domain>
-
-Check ports:
-  ss -tulnp
-""",
-
-    "Git": """Git Commands
-
-Clone:
-  git clone <url>
-
-Commit:
-  git add .
-  git commit -m "message"
-
-Push:
-  git push
-
-Branches:
-  git branch
-  git checkout <branch>
-""",
-
-    "Fastfetch": """Fastfetch Tips
-
-Run:
-  fastfetch
-
-Config file:
-  ~/.config/fastfetch/config.jsonc
-
-Examples:
-  fastfetch --logo arch_small
-  fastfetch --structure cpu gpu os shell wm
-"""
-}
-
-menu = list(pages.keys()) + ["Quit"]
-
-def show_page(stdscr, title):
-    stdscr.clear()
-    curses.init_pair(2, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-    stdscr.addstr(0, 2, title, curses.color_pair(2) | curses.A_BOLD)
-
-    lines = pages[title].split("\n")
-    for i, line in enumerate(lines):
-        stdscr.addstr(2 + i, 2, line)
-
-    stdscr.addstr(22, 2, "Press any key to go back", curses.A_DIM)
-    stdscr.getch()
-
-def main(stdscr):
-    curses.curs_set(0)
-    curses.start_color()
-    curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
-
-    current = 0
-
-    while True:
-        stdscr.clear()
-        stdscr.addstr(0, 2, "Filip's HelpGUI", curses.color_pair(1) | curses.A_BOLD)
-
-        for i, item in enumerate(menu):
-            if i == current:
-                stdscr.addstr(i + 2, 2, "> " + item, curses.A_REVERSE)
-            else:
-                stdscr.addstr(i + 2, 2, "  " + item)
-
-        stdscr.addstr(len(menu) + 3, 2, "Use ↑ ↓ to move, Enter to select", curses.A_DIM)
-
-        key = stdscr.getch()
-
-        if key == curses.KEY_UP and current > 0:
-            current -= 1
-        elif key == curses.KEY_DOWN and current < len(menu) - 1:
-            current += 1
-        elif key == 10:
-            if menu[current] == "Quit":
-                sys.exit(0)
-            else:
-                show_page(stdscr, menu[current])
-
-curses.wrapper(main)
-
-
-
-
-
-
-
-
-
-then save it and use the up and down arrow keys 
+MIT License
